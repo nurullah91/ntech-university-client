@@ -1,42 +1,63 @@
-import { Button } from "antd";
-import { useForm } from "react-hook-form";
+import { Button, Row } from "antd";
+import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../redux/features/auth/authApi";
 import { useAppDispatch } from "../redux/hooks";
-import { setUser } from "../redux/features/auth/authSlice";
+import { setUser, TUser } from "../redux/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
+import NTechFrom from "../components/form/NTechFrom";
+import NTechInput from "../components/form/NTechInput";
 
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  // const { register, handleSubmit } = useForm({
+  //   defaultValues: {
+  //     userId: "0001",
+  //     password: "admin12345",
+  //   },
+  // });
   const dispatch = useAppDispatch();
-  const [login, { data, error }] = useLoginMutation();
+  const navigate = useNavigate();
+  const [login, { error }] = useLoginMutation();
 
-  console.log({ data, error });
+  if (error) {
+    toast.error("Something went wrong");
+  }
 
-  const onsubmit = async (data: object) => {
-    console.log(data);
-    const res = await login(data).unwrap();
-    const user = verifyToken(res.data.accessToken);
-    dispatch(setUser({ user: user, token: res.data.accessToken }));
+  const defaultValues = {
+    userId: "A-0002",
+    password: "admin123",
+  };
+  const onSubmit = async (data: FieldValues) => {
+    const toastId = toast.loading("Logging in");
+
+    try {
+      const userInfo = {
+        id: data.userId,
+        password: data.password,
+      };
+      const res = await login(userInfo).unwrap();
+      const user = verifyToken(res.data.accessToken) as TUser;
+      dispatch(setUser({ user: user, token: res.data.accessToken }));
+
+      toast.success("Logged in", { id: toastId, duration: 2000 });
+
+      navigate(`/`);
+    } catch (error) {
+      toast.error("Something went wrong", { id: toastId, duration: 2000 });
+    }
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        minHeight: "100vh",
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <form onSubmit={handleSubmit(onsubmit)}>
-        <label htmlFor="id">ID:</label>
-        <input type="text" id="id" {...register("id")} />
-        <label htmlFor="password">Password</label>
-        <input type="text" id="password" {...register("password")} />
+    <Row justify="center" align="middle" style={{ height: "100vh" }}>
+      <NTechFrom onSubmit={onSubmit} defaultValues={defaultValues}>
+        <NTechInput type="text" name="userId" label="ID:" />
+
+        <NTechInput type="text" name="password" label="Password:" />
+
         <Button htmlType="submit">Submit</Button>
-      </form>
-    </div>
+      </NTechFrom>
+    </Row>
   );
 };
 
