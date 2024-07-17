@@ -40,11 +40,11 @@ const Login = () => {
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
 
-      toast.success("Logged in", { id: toastId, duration: 2000 });
+      toast.success("Logged in", { id: toastId, duration: 1000 });
 
       navigate(`/`);
     } catch (error) {
-      toast.error("Something went wrong", { id: toastId, duration: 2000 });
+      toast.error("Something went wrong", { id: toastId, duration: 1000 });
     }
   };
 

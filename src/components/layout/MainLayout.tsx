@@ -4,12 +4,14 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useAppDispatch } from "../../redux/hooks";
 import { logout } from "../../redux/features/auth/authSlice";
+import { toast } from "sonner";
 const { Header, Content } = Layout;
 const MainLayout: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     dispatch(logout());
+    toast.success("Logged out");
   };
   return (
     <Layout style={{ height: "100vh" }}>
