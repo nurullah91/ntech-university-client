@@ -10,7 +10,7 @@ import {
 import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
-import { TResponse } from "../../types/global";
+import { TResponse } from "../../types/global.type";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://ntech-university-server.vercel.app/api/v1",
