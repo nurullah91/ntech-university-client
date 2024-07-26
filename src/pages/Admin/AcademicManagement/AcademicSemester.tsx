@@ -24,6 +24,7 @@ const AcademicSemester = () => {
       year,
     })
   );
+
   const columns: TableColumnsType<TTableData> = [
     {
       title: "Name",

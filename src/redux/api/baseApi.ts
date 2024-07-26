@@ -14,7 +14,7 @@ import { TResponse } from "../../types/global.type";
 import { TAcademicSemester } from "../../types";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://ntech-university-server.vercel.app/api/v1",
+  baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/v1`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -43,7 +43,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
   if (result.error?.status === 401) {
     const res = await fetch(
-      "https://ntech-university-server.vercel.app/api/v1/auth/refresh-token",
+      `${import.meta.env.VITE_SERVER_URL}/api/v1/auth/refresh-token`,
       {
         method: "POST",
         credentials: "include",
