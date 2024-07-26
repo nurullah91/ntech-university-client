@@ -17,7 +17,6 @@ export type TMeta = {
   totalPage: number;
 };
 export type TResponse<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: T;
   error?: TError;
   meta?: TMeta;

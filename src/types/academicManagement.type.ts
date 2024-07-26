@@ -8,3 +8,10 @@ export type TAcademicSemester = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type TAcademicFaculty = {
+  name: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+};

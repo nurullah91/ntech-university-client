@@ -11,6 +11,7 @@ import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
 import { toast } from "sonner";
 import { TResponse } from "../../types/global.type";
+import { TAcademicSemester } from "../../types";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://ntech-university-server.vercel.app/api/v1",
@@ -30,7 +31,11 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   BaseQueryApi,
   DefinitionType
 > = async (args, api, extraOptions): Promise<any> => {
-  let result = (await baseQuery(args, api, extraOptions)) as TResponse;
+  let result = (await baseQuery(
+    args,
+    api,
+    extraOptions
+  )) as TResponse<TAcademicSemester>;
 
   if (result.error?.status === 404) {
     toast.error(result.error.data.message);
@@ -56,7 +61,11 @@ const baseQueryWithRefreshToken: BaseQueryFn<
         })
       );
 
-      result = (await baseQuery(args, api, extraOptions)) as TResponse;
+      result = (await baseQuery(
+        args,
+        api,
+        extraOptions
+      )) as TResponse<TAcademicSemester>;
     } else {
       toast("Login expired");
       api.dispatch(logout());
