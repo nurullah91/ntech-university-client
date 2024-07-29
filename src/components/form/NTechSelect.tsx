@@ -4,10 +4,11 @@ import { Controller } from "react-hook-form";
 type TNTechSelectProps = {
   label: string;
   name: string;
-  options: { value: string; label: string; disabled?: boolean }[];
+  options: { value: string; label: string; disabled?: boolean }[] | undefined;
+  disabled?: boolean;
 };
 
-const NTechSelect = ({ label, name, options }: TNTechSelectProps) => {
+const NTechSelect = ({ label, name, options, disabled }: TNTechSelectProps) => {
   return (
     <Controller
       name={name}
@@ -18,6 +19,7 @@ const NTechSelect = ({ label, name, options }: TNTechSelectProps) => {
             {...field}
             options={options}
             size="large"
+            disabled={disabled}
           />
           {error && <small style={{ color: "red" }}>{error.message}</small>}
         </Form.Item>
