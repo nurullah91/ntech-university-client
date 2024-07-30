@@ -1,5 +1,5 @@
 import React from "react";
-import { useGetAllFacultyQuery } from "../../../redux/features/admin/academicManagement.api";
+import { useGetAllAcademicFacultyQuery } from "../../../redux/features/admin/academicManagement.api";
 import { Button, Table, TableColumnsType } from "antd";
 
 type TAcademicFacultyTableData = {
@@ -11,7 +11,7 @@ const AcademicFaculty: React.FC = () => {
     data: academicFaculties,
     isLoading,
     isFetching,
-  } = useGetAllFacultyQuery(undefined);
+  } = useGetAllAcademicFacultyQuery(undefined);
 
   const tableData = academicFaculties?.data?.map(({ _id, name }) => ({
     key: _id,

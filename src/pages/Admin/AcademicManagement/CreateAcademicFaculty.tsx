@@ -27,21 +27,24 @@ const CreateAcademicFaculty: React.FC = () => {
     } catch (error) {
       toast.error("Something went wrong", { id: toastId });
     }
-
-    console.log(data);
   };
   return (
-    <Flex justify="center" align="center">
-      <Col span={6}>
-        <NTechFrom
-          onSubmit={onSubmit}
-          resolver={zodResolver(academicFacultySchema)}
-        >
-          <NTechInput name="name" label="Faculty Name" type="text" />
-          <Button htmlType="submit">Submit</Button>
-        </NTechFrom>
-      </Col>
-    </Flex>
+    <div>
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Create a new Academic Faculty
+      </h1>
+      <Flex justify="center" align="center">
+        <Col span={6}>
+          <NTechFrom
+            onSubmit={onSubmit}
+            resolver={zodResolver(academicFacultySchema)}
+          >
+            <NTechInput name="name" label="Faculty Name" type="text" />
+            <Button htmlType="submit">Submit</Button>
+          </NTechFrom>
+        </Col>
+      </Flex>
+    </div>
   );
 };
 

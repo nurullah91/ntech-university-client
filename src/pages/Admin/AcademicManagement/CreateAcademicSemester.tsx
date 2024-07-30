@@ -49,29 +49,35 @@ const CreateAcademicSemester: React.FC = () => {
   };
 
   return (
-    <Flex justify="center" align="center">
-      <Col span={6}>
-        <NTechFrom
-          onSubmit={onSubmit}
-          resolver={zodResolver(academicSemesterSchema)}
-        >
-          <NTechSelect label="name" name="name" options={nameOptions} />
-          <NTechSelect label="Year" name="year" options={yearOptions} />
-          <NTechSelect
-            label="Start Month"
-            name="startMonth"
-            options={monthOptions}
-          />
-          <NTechSelect
-            label="End Month"
-            name="endMonth"
-            options={monthOptions}
-          />
+    <div>
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Create a new Academic Semester
+      </h1>
 
-          <Button htmlType="submit">Submit</Button>
-        </NTechFrom>
-      </Col>
-    </Flex>
+      <Flex justify="center" align="center">
+        <Col span={6}>
+          <NTechFrom
+            onSubmit={onSubmit}
+            resolver={zodResolver(academicSemesterSchema)}
+          >
+            <NTechSelect label="name" name="name" options={nameOptions} />
+            <NTechSelect label="Year" name="year" options={yearOptions} />
+            <NTechSelect
+              label="Start Month"
+              name="startMonth"
+              options={monthOptions}
+            />
+            <NTechSelect
+              label="End Month"
+              name="endMonth"
+              options={monthOptions}
+            />
+
+            <Button htmlType="submit">Submit</Button>
+          </NTechFrom>
+        </Col>
+      </Flex>
+    </div>
   );
 };
 
