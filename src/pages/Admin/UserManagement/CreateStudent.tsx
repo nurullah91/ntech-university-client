@@ -176,7 +176,7 @@ const CreateStudent: React.FC = () => {
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
                 <NTechSelect
                   label="Blood Group"
-                  name="bloogGroup"
+                  name="bloodGroup"
                   options={bloodGroupsOptions}
                 />
               </Col>
