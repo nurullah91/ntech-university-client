@@ -9,7 +9,7 @@ import { baseApi } from "../../api/baseApi";
 
 const academicManagementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllSemesters: builder.query({
+    getAllAcademicSemesters: builder.query({
       query: (args) => {
         const params = new URLSearchParams();
         if (args) {
@@ -84,7 +84,7 @@ const academicManagementApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetAllSemestersQuery,
+  useGetAllAcademicSemestersQuery,
   useGetAllAcademicFacultyQuery,
   useGetAllAcademicDepartmentQuery,
   useCreateAcademicFacultyMutation,

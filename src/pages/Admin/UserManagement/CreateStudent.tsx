@@ -7,7 +7,7 @@ import { bloodGroupsOptions, genderOptions } from "../../../constants/global";
 import NTechDatePicker from "../../../components/form/NTechDatePicker";
 import {
   useGetAllAcademicDepartmentQuery,
-  useGetAllSemestersQuery,
+  useGetAllAcademicSemestersQuery,
 } from "../../../redux/features/admin/academicManagement.api";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
 import { toast } from "sonner";
@@ -56,7 +56,7 @@ const CreateStudent: React.FC = () => {
     useAddStudentMutation();
 
   const { data: semesters, isLoading: sLoading } =
-    useGetAllSemestersQuery(undefined);
+    useGetAllAcademicSemestersQuery(undefined);
 
   const { data: academicDepartment, isLoading: aDLoading } =
     useGetAllAcademicDepartmentQuery(undefined);
