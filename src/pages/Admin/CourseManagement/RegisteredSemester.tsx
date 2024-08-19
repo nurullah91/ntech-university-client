@@ -129,7 +129,12 @@ const RegisteredSemester = () => {
     return <h1 style={{ textAlign: "center" }}>Loading...</h1>;
   }
   return (
-    <Table loading={isFetching} columns={columns} dataSource={tableData} />
+    <div>
+      <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
+        Registered Semester
+      </h1>
+      <Table loading={isFetching} columns={columns} dataSource={tableData} />
+    </div>
   );
 };
 
