@@ -77,7 +77,6 @@ const AssignFacultyModal = ({ facultyInfo }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [assignFaculties] = useAssignFacultiesMutation();
   const { data: facultiesData } = useGetAllFacultiesQuery(undefined);
-  console.log(facultiesData);
 
   const facultiesOptions = facultiesData?.data?.map((item) => ({
     value: item._id,

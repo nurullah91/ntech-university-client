@@ -52,13 +52,36 @@ export type TStudent = {
   email: string;
   contactNo: string;
   emergencyContactNo: string;
-  bloogGroup: string;
+  bloodGroup: string;
   presentAddress: string;
   permanentAddress: string;
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg: string;
   admissionSemester: TAcademicSemester;
+  isDeleted: boolean;
+  academicDepartment: TAcademicDepartment;
+  academicFaculty: TAcademicFaculty;
+  fullName: string;
+};
+
+export type TFaculty = {
+  _id: string;
+  id: string;
+  user: TUser;
+  designation: string;
+  name: TName;
+  gender: string;
+  dateOfBirth: string;
+  email: string;
+  contactNo: string;
+  emergencyContactNo: string;
+  bloodGroup: string;
+  presentAddress: string;
+  permanentAddress: string;
+  guardian: TGuardian;
+  localGuardian: TLocalGuardian;
+  profileImg: string;
   isDeleted: boolean;
   academicDepartment: TAcademicDepartment;
   academicFaculty: TAcademicFaculty;

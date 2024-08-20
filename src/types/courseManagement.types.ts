@@ -1,4 +1,10 @@
-import { TAcademicSemester } from "./academicManagement.type";
+import {
+  TAcademicDepartment,
+  TAcademicFaculty,
+  TAcademicSemester,
+} from "./academicManagement.type";
+import { TFaculty } from "./userManagement.types";
+export type TDays = "Sat" | "San" | "Mon" | "Tue" | "Wed" | "Thu" | "Fri";
 
 export type TCourse = {
   code: number;
@@ -20,4 +26,17 @@ export type TSemesterRegistration = {
   maxCredit: number;
   cratedAt: string;
   updatedAt: string;
+};
+
+export type TOfferedCourse = {
+  semesterRegistration: TSemesterRegistration;
+  academicFaculty: TAcademicFaculty;
+  academicDepartment: TAcademicDepartment;
+  course: TCourse;
+  faculty: TFaculty;
+  section: number;
+  maxCapacity: number;
+  days: TDays[];
+  startTime: string;
+  endTime: string;
 };
