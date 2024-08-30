@@ -41,6 +41,10 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     toast.error(result.error.data.message);
   }
 
+  if (result.error?.status === 403) {
+    toast.error(result.error.data.message);
+  }
+
   if (result.error?.status === 401) {
     const res = await fetch(
       `${import.meta.env.VITE_SERVER_URL}/api/v1/auth/refresh-token`,
@@ -77,6 +81,11 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["semesterRegistration", "courses", "offeredCourses"],
+  tagTypes: [
+    "semesterRegistration",
+    "courses",
+    "offeredCourses",
+    "courseFaculty",
+  ],
   endpoints: () => ({}),
 });

@@ -25,8 +25,8 @@ const Login = () => {
   }
 
   const defaultValues = {
-    userId: "A-0002",
-    password: "admin123",
+    userId: "2024010001",
+    password: "student123",
   };
   const onSubmit = async (data: FieldValues) => {
     const toastId = toast.loading("Logging in");
@@ -41,8 +41,15 @@ const Login = () => {
       dispatch(setUser({ user: user, token: res.data.accessToken }));
 
       toast.success("Logged in", { id: toastId, duration: 1000 });
-
-      navigate(`/`);
+      console.log(res);
+      if (res.data.needsPasswordChange) {
+        toast.info("Change your password first", {
+          duration: 1000,
+        });
+        navigate(`/change-password`);
+      } else {
+        navigate(`/${user.role}/dashboard`);
+      }
     } catch (error) {
       toast.error("Something went wrong", { id: toastId, duration: 1000 });
     }
@@ -55,7 +62,7 @@ const Login = () => {
 
         <NTechInput type="text" name="password" label="Password:" />
 
-        <Button htmlType="submit">Submit</Button>
+        <Button htmlType="submit">Login</Button>
       </NTechFrom>
     </Row>
   );

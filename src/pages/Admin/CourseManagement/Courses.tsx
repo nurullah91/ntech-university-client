@@ -18,8 +18,6 @@ export type TTableData = Pick<
 >;
 
 const Courses = () => {
-  // const [registeredSemesterId, setRegisteredSemesterId] = useState("");
-
   const {
     data: coursesData,
     isLoading,

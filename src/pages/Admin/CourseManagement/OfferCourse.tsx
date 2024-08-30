@@ -7,6 +7,7 @@ import {
   useCreateOfferCourseMutation,
   useGetAllCoursesQuery,
   useGetAllRegisteredSemesterQuery,
+  useGetCourseFacultyQuery,
 } from "../../../redux/features/admin/courseManagement.api";
 import {
   TAcademicFaculty,
@@ -24,13 +25,11 @@ import {
   useGetAllAcademicDepartmentQuery,
   useGetAllAcademicFacultyQuery,
 } from "../../../redux/features/admin/academicManagement.api";
-import { useGetAllFacultiesQuery } from "../../../redux/features/admin/userManagement.api";
 import NTechSelectWithWatch from "../../../components/form/NTechSelectWithWatch";
 
 const OfferCourse: React.FC = () => {
   const [selectedAcademicFaculty, setSelectedAcademicFaculty] = useState("");
-  const [selectedAcademicDepartment, setSelectedAcademicDepartment] =
-    useState("");
+  const [selectedCourse, setSelectedCourse] = useState("");
 
   const [createOfferedCourse] = useCreateOfferCourseMutation();
 
@@ -38,18 +37,20 @@ const OfferCourse: React.FC = () => {
   const { data: academicFaculties } = useGetAllAcademicFacultyQuery(undefined);
   const { data: registeredSemester } =
     useGetAllRegisteredSemesterQuery(undefined);
-  const { data: academicDepartments } = useGetAllAcademicDepartmentQuery([
-    {
-      name: "academicFaculty",
-      value: selectedAcademicFaculty,
-    },
-  ]);
-  const { data: faculties } = useGetAllFacultiesQuery([
-    {
-      name: "academicDepartment",
-      value: selectedAcademicDepartment,
-    },
-  ]);
+
+  const { data: academicDepartments, isFetching: departmentFetching } =
+    useGetAllAcademicDepartmentQuery(
+      [
+        {
+          name: "academicFaculty",
+          value: selectedAcademicFaculty,
+        },
+      ],
+      { skip: !selectedAcademicFaculty }
+    );
+
+  const { data: faculties, isFetching: facultyFetching } =
+    useGetCourseFacultyQuery(selectedCourse, { skip: !selectedCourse });
 
   // Options for DropDown
   const academicFacultiesOptions = academicFaculties?.data?.map(
@@ -66,10 +67,12 @@ const OfferCourse: React.FC = () => {
     })
   );
 
-  const facultiesOptions = faculties?.data?.map((item: TFaculty) => ({
-    label: item.fullName,
-    value: item._id,
-  }));
+  const facultiesOptions = faculties?.data?.faculties?.map(
+    (item: TFaculty) => ({
+      label: item.fullName,
+      value: item._id,
+    })
+  );
 
   const coursesOptions = courses?.data?.map((item: TCourse) => ({
     label: item.title,
@@ -93,7 +96,7 @@ const OfferCourse: React.FC = () => {
       startTime: data.startTime.format("HH:mm"),
       endTime: data.endTime.format("HH:mm"),
     };
-    console.log(offeredCourseData);
+
     try {
       const res = (await createOfferedCourse(
         offeredCourseData
@@ -117,6 +120,11 @@ const OfferCourse: React.FC = () => {
       <Flex justify="center" align="center">
         <Col span={6}>
           <NTechFrom onSubmit={onSubmit}>
+            <NTechSelect
+              label="Registered Semester"
+              name="semesterRegistration"
+              options={registeredSemesterOptions}
+            />
             <NTechSelectWithWatch
               onValueChange={setSelectedAcademicFaculty}
               label="Academic Faculty"
@@ -124,28 +132,26 @@ const OfferCourse: React.FC = () => {
               options={academicFacultiesOptions}
             />
             <NTechSelectWithWatch
-              onValueChange={setSelectedAcademicDepartment}
-              disabled={!selectedAcademicFaculty}
+              onValueChange={setSelectedCourse}
+              disabled={!selectedAcademicFaculty || departmentFetching}
               label="Academic Department"
               name="academicDepartment"
               options={academicDepartmentOptions}
             />
-            <NTechSelect
-              disabled={!selectedAcademicDepartment}
-              label="Faculty"
-              name="faculty"
-              options={facultiesOptions}
-            />
-            <NTechSelect
+            <NTechSelectWithWatch
+              onValueChange={setSelectedCourse}
               label="Course"
               name="course"
               options={coursesOptions}
             />
+
             <NTechSelect
-              label="Registered Semester"
-              name="semesterRegistration"
-              options={registeredSemesterOptions}
+              disabled={!selectedCourse || facultyFetching}
+              label="Faculty"
+              name="faculty"
+              options={facultiesOptions}
             />
+
             <NTechInput name="section" label="Section" type="text" />
             <NTechInput name="maxCapacity" label="Max Capacity" type="text" />
             <NTechSelect

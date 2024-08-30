@@ -29,6 +29,7 @@ export type TSemesterRegistration = {
 };
 
 export type TOfferedCourse = {
+  _id: string;
   semesterRegistration: TSemesterRegistration;
   academicFaculty: TAcademicFaculty;
   academicDepartment: TAcademicDepartment;
